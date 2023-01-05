@@ -1,11 +1,14 @@
 package com.swcoaching.example1.member.jpa;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.swcoaching.example1.board.jpa.CommentEntity;
+import com.swcoaching.example1.board.jpa.PostEntity;
+import jakarta.persistence.*;
+import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
 @Table(name = "member")
 @Entity
 public class MemberEntity {
@@ -17,7 +20,13 @@ public class MemberEntity {
   private String name;
   private String remark;
 
-  public Long getId() {
+  @OneToMany(mappedBy = "member")
+  private List<PostEntity> posts = new ArrayList<>();
+
+  @OneToMany(mappedBy = "member")
+  private List<CommentEntity> comments = new ArrayList<>();
+
+  /*public Long getId() {
     return id;
   }
 
@@ -35,5 +44,5 @@ public class MemberEntity {
 
   public String getRemark() {
     return remark;
-  }
+  }*/
 }

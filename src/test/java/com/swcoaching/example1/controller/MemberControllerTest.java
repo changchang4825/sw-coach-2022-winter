@@ -1,5 +1,7 @@
 package com.swcoaching.example1.controller;
 
+import com.swcoaching.example1.board.Comment;
+import com.swcoaching.example1.board.Post;
 import com.swcoaching.example1.member.Member;
 import com.swcoaching.example1.member.MemberService;
 import org.junit.jupiter.api.DisplayName;
@@ -9,6 +11,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+
+import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
@@ -34,7 +38,9 @@ class MemberControllerTest {
         String password = "password";
         String name = "테스트유저";
         String remark = "비고";
-        when(memberService.findByUsername(username)).thenReturn(new Member(id, username, password, name, remark));
+        List<Post> posts = null;
+        List<Comment> comments = null;
+        when(memberService.findByUsername(username)).thenReturn(new Member(id, username, password, name, remark, posts, comments));
 
         // when
         ResultActions resultActions = mockMvc.perform(get("/member?username=" + username)).andDo(print());
