@@ -1,7 +1,7 @@
 SET FOREIGN_KEY_CHECKS=0;
 
-TRUNCATE TABLE member;
-INSERT INTO member(username, password, name, remark)
+TRUNCATE TABLE user;
+INSERT INTO user(username, password, name, remark)
 VALUES
     ('skku_student1','test1','학생1','테스트 학생'),
     ('skku_student2','test2','학생2','테스트 학생');

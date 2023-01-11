@@ -1,6 +1,7 @@
-package com.swcoaching.example1.board.jpa;
+package com.swcoaching.example1.user.jpa;
 
-import com.swcoaching.example1.user.jpa.UserEntity;
+import com.swcoaching.example1.board.jpa.CommentEntity;
+import com.swcoaching.example1.board.jpa.PostEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
@@ -11,34 +12,26 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 게시물
- */
 @Getter
-@Table(name = "post")
+@Table(name = "user")
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-public class PostEntity {
+public class UserEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(length = 1000)
-  private String title;
+  @Column(length = 100, nullable = false)
+  private String username;
+
+  @Column(length = 100, nullable = false)
+  private String password;
+
+  @Column(length = 100, nullable = false)
+  private String name;
 
   @Column(columnDefinition = "text")
-  private String contents;
-
-  @OneToMany(mappedBy = "post")
-  private List<CommentEntity> comments = new ArrayList<>();
-
-  @ManyToOne
-  @JoinColumn(name = "boardId")
-  private BoardEntity board;
-
-  @ManyToOne
-  @JoinColumn(name = "userId")
-  private UserEntity user;
+  private String bio;
 
   @CreatedDate
   @Column(updatable = false, nullable = false)
@@ -48,4 +41,9 @@ public class PostEntity {
   @Column(nullable = false)
   private LocalDateTime modifiedAt;
 
+  @OneToMany(mappedBy = "user")
+  private List<PostEntity> posts = new ArrayList<>();
+
+  @OneToMany(mappedBy = "user")
+  private List<CommentEntity> comments = new ArrayList<>();
 }

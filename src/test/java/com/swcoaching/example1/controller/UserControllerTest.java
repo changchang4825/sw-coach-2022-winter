@@ -2,8 +2,8 @@ package com.swcoaching.example1.controller;
 
 import com.swcoaching.example1.board.Comment;
 import com.swcoaching.example1.board.Post;
-import com.swcoaching.example1.member.Member;
-import com.swcoaching.example1.member.MemberService;
+import com.swcoaching.example1.user.User;
+import com.swcoaching.example1.user.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +20,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-@WebMvcTest(MemberController.class)
-class MemberControllerTest {
+@WebMvcTest(UserController.class)
+class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private MemberService memberService;
+    private UserService userService;
 
     @DisplayName("회원을 조회 테스트를 한다")
     @Test
@@ -40,7 +40,7 @@ class MemberControllerTest {
         String remark = "비고";
         List<Post> posts = null;
         List<Comment> comments = null;
-        when(memberService.findByUsername(username)).thenReturn(new Member(id, username, password, name, remark, posts, comments));
+        when(userService.findByUsername(username)).thenReturn(new User(id, username, password, name, remark, posts, comments));
 
         // when
         ResultActions resultActions = mockMvc.perform(get("/member?username=" + username)).andDo(print());

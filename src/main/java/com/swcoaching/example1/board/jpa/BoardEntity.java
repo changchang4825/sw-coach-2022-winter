@@ -1,19 +1,19 @@
 package com.swcoaching.example1.board.jpa;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Table(name = "board")
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class BoardEntity {
   @Id
@@ -37,5 +37,13 @@ public class BoardEntity {
    */
   @OneToMany(mappedBy = "board")
   public List<PostEntity> posts = new ArrayList<>();
+
+  @CreatedDate
+  @Column(updatable = false, nullable = false)
+  private LocalDateTime createdAt;
+
+  @LastModifiedDate
+  @Column(nullable = false)
+  private LocalDateTime modifiedAt;
 
 }
